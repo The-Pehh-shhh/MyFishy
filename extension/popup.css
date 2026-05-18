@@ -1,0 +1,290 @@
+/* popup.css */
+
+body {
+    width: 320px;
+    height: 440px;
+    margin: 0;
+    padding: 0;
+    background-color: #050505;
+    font-family: "Courier New", Courier, monospace;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Subtle grid overlay */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hud-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    border: 1px solid #333;
+    transition: all 0.3s ease;
+}
+
+.hud-header {
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+    transition: border-color 0.3s ease;
+}
+
+.hud-header h1 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.hud-header .version {
+    font-size: 10px;
+    color: #888;
+    vertical-align: super;
+}
+
+.hud-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.radar-wrapper {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    margin-bottom: 15px;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.status-panel {
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #222;
+    transition: border-color 0.3s ease;
+}
+
+.glitch-text {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* BUG FIX: Text-Overflow Layout Break */
+.url-text {
+    margin: 0;
+    font-size: 10px;
+    color: #666;
+    /* Strict layout constraints */
+    display: block;
+    width: 100%;
+    max-width: 270px;
+    table-layout: fixed;
+    /* Explicitly requested constraint */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- STATES --- */
+
+/* Scanning State */
+.hud-container.scanning {
+    border-color: #f1c40f;
+    box-shadow: inset 0 0 20px rgba(241, 196, 15, 0.1), 0 0 15px rgba(241, 196, 15, 0.2);
+}
+
+.hud-container.scanning .hud-header {
+    border-color: #f1c40f;
+}
+
+.hud-container.scanning .hud-header h1 {
+    color: #f1c40f;
+    text-shadow: 0 0 8px rgba(241, 196, 15, 0.6);
+}
+
+.hud-container.scanning .glitch-text {
+    color: #f1c40f;
+    text-shadow: 0 0 8px rgba(241, 196, 15, 0.6);
+    animation: blink 1s infinite;
+}
+
+/* Safe State */
+.hud-container.safe {
+    border-color: #00ffcc;
+    box-shadow: inset 0 0 30px rgba(0, 255, 204, 0.15), 0 0 25px rgba(0, 255, 204, 0.3);
+}
+
+.hud-container.safe .hud-header {
+    border-color: #00ffcc;
+}
+
+.hud-container.safe .hud-header h1 {
+    color: #00ffcc;
+    text-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
+}
+
+.hud-container.safe .glitch-text {
+    color: #00ffcc;
+    text-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
+}
+
+/* Critical State */
+.hud-container.critical {
+    border-color: #ff003c;
+    box-shadow: inset 0 0 40px rgba(255, 0, 60, 0.2), 0 0 35px rgba(255, 0, 60, 0.4);
+    /* Jarring CSS shake animation for critical threat */
+    animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both infinite;
+}
+
+.hud-container.critical .hud-header {
+    border-color: #ff003c;
+}
+
+.hud-container.critical .hud-header h1 {
+    color: #ff003c;
+    text-shadow: 0 0 10px rgba(255, 0, 60, 0.8);
+}
+
+.hud-container.critical .glitch-text {
+    color: #ff003c;
+    text-shadow: 0 0 10px rgba(255, 0, 60, 0.8);
+    animation: pulse 0.5s infinite alternate;
+}
+
+.hud-container.critical .status-panel {
+    border-color: rgba(255, 0, 60, 0.5);
+    background: rgba(255, 0, 60, 0.15);
+}
+
+/* Error State */
+.hud-container.error {
+    border-color: #888;
+}
+
+.hud-container.error .glitch-text {
+    color: #888;
+}
+
+/* Animations */
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+}
+
+@keyframes shake {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-2px, -2px) rotate(-1deg);
+    }
+
+    20% {
+        transform: translate(2px, -1px) rotate(1deg);
+    }
+
+    30% {
+        transform: translate(-3px, 2px) rotate(0deg);
+    }
+
+    40% {
+        transform: translate(3px, 1px) rotate(1deg);
+    }
+
+    50% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+
+    60% {
+        transform: translate(2px, 3px) rotate(0deg);
+    }
+
+    70% {
+        transform: translate(-2px, -1px) rotate(-1deg);
+    }
+
+    80% {
+        transform: translate(1px, 2px) rotate(1deg);
+    }
+
+    90% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+/* Scanlines overlay effect */
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0) 50%,
+            rgba(0, 0, 0, 0.1) 50%,
+            rgba(0, 0, 0, 0.1));
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.6;
+}

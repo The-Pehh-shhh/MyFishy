@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "myfishy",
+  "short_name": "myfishy",
+  "version": "1.0",
+  "description": "Scans websites in real-time to protect against phishing threats using an XGBoost Machine Learning model.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "myfishy Scan"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8000/*",
+    "http://localhost:8000/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

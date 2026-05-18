@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myfishy</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div id="hud-container" class="hud-container scanning">
+        <div class="hud-header">
+            <h1>myfishy <span class="version">v1.0</span></h1>
+        </div>
+        
+        <div class="hud-content">
+            <!-- Radar Chart Canvas -->
+            <div class="radar-wrapper">
+                <canvas id="radarCanvas" width="240" height="240"></canvas>
+            </div>
+            
+            <!-- Threat Status Text -->
+            <div class="status-panel">
+                <p id="threat-level" class="glitch-text">[ TARGET SCAN IN PROGRESS... ]</p>
+                <p id="url-display" class="url-text"></p>
+            </div>
+        </div>
+        
+        <!-- Subtle Scanline overlay -->
+        <div class="scanlines"></div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

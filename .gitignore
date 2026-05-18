@@ -1,0 +1,6 @@
+__pycache__/
+.venv/
+*.pkl
+cleaned_phishing_features.csv
+dataset_phishtank.csv
+dataset_benign.csv
