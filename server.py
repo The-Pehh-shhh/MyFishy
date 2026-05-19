@@ -16,7 +16,7 @@ app.add_middleware(
 )
 
 print("Loading model phishguard_model.pkl...")
-with open("phishguard_model.pkl", "rb") as f:
+with open("MyFishy\phishguard_model.pkl", "rb") as f:
     model = pickle.load(f)
 print("Model loaded successfully.")
 
